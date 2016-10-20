@@ -110,8 +110,3 @@ def readFile(moniPath, tpsPath, moniFile, outputFile):
             handle(element,tpsPath + "/" +outputFile)
     #except:
     #    rptFile.close()     
-
-if __name__ == "__main__":
-    for root, dirs, outputFiles in os.walk(moniPath):
-        for outputFile in outputFiles:
-            readFile(moniPath, tpsPath, outputFile)  

@@ -20,10 +20,11 @@ def exceltoimage(reportPath, fileName, imagePath):
         del excel
 
 def imagechoose(Path, fileName):
-    count = int(fileName.split(".")[0][5:])
-    if (("png" not in fileName) or (count % 2 == 0)):
+    if ("png" not in fileName):
         remove(Path +"\\"+ fileName)
-    
+    elif(int(fileName.split(".")[0][5:]) % 2 == 1):
+        remove(Path +"\\"+ fileName)
+            
         
         
     

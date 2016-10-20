@@ -1,7 +1,7 @@
-import Tps_normal
+
 import report_peek_normal
 import report_tps
-import Peek_normal
+import moni_csv
 import report_peek_mcis
 import os,re
 from config import moniPath,tpsPath,reportPath,peekPath,imagePath
@@ -10,12 +10,12 @@ from exceltoimage import exceltoimage,imagechoose
 if __name__ == "__main__":
     for root, dirs, files in os.walk(moniPath):
         for moniFile in files:
-            if re.search("-", moniFile):
-                outputFile = "-".join(moniFile.split("-")[0:2])
+            if re.search("_", moniFile):
+                outputFile = "_".join(moniFile.split("_")[0:2])
+                print outputFile
             else:
-                outputFile = "-".join(moniFile.split(".")[1:3])
-            Tps_normal.readFile(moniPath, tpsPath, moniFile, outputFile)
-            Peek_normal.readFile(moniPath, peekPath, moniFile, outputFile)
+                outputFile = "_".join(moniFile.split(".")[1:3])
+            moni_csv.readFile(moniPath, peekPath, tpsPath, moniFile, outputFile)
     for root, dirs, files in os.walk(tpsPath):
         for tpsFile in files:
             print tpsFile
