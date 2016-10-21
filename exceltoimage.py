@@ -1,7 +1,5 @@
 from win32com.client import Dispatch
 import os
-from config import imagePath
-from re import search
 from os import remove
 
 def exceltoimage(reportPath, fileName, imagePath):
@@ -22,7 +20,7 @@ def exceltoimage(reportPath, fileName, imagePath):
 def imagechoose(Path, fileName):
     if ("png" not in fileName):
         remove(Path +"\\"+ fileName)
-    elif(int(fileName.split(".")[0][5:]) % 2 == 1):
+    elif(int(fileName.split(".")[0][5:]) % 2 == 0):
         remove(Path +"\\"+ fileName)
             
         
