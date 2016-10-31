@@ -267,13 +267,7 @@ lang=EN-US>TPS</span><span style='font-family:宋体'>及最大并发数，总�
 <h5 align=left style='margin-left:61.8pt;text-align:left;text-indent:-21.15pt'><b><span
 lang=EN-US style='font-size:12.0pt;line-height:105%'>2.2 CICS</span></b><b><span
 style='font-size:12.0pt;line-height:105%;font-family:宋体'>并发数控制</span></b></h5>
-{% from random import randint %}
-{% i = randint(0, len(lparInfo)) %}
-{% for root,dirs,files in walk(imagePath + '\\'+lpar + '_'+region+'.xlsx.html') %}
-    for i in xrange(2,len(files),1):
-                imageFile = files(2*i + 1)
-{% module TclassModule(lparInfo[i],regionInfo[i],imagePath %}
-{% end %}
+{% module TclassModule(lparInfo,regionInfo,imagePath) %}
 <p class=MsoNormal style='line-height:150%;text-autospace:none'><span
 lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; IPS-VIP</span><span
 style='font-family:宋体'>系统</span><span lang=EN-US>8</span><span

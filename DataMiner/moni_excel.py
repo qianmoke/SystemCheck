@@ -15,7 +15,7 @@ dateEnd = period[0]
 def processLine(text, peekDict, tpsDict, maxPoolUse):
     tmpDict=OrderedDict()
     timetag = ""
-    regionPool,sharedPool = (0, 0)
+    regionPool, regionPoolConfig, sharedPool, sharedPoolConfig = (0, 0, 0, 0)
     words = text.split("==")
     for line in text.splitlines():
         if (search("TClass", line) and (not search("TClassINFO_DFHTCL00",line) and (not search("TClassINFO00",line)))):
@@ -24,8 +24,14 @@ def processLine(text, peekDict, tpsDict, maxPoolUse):
             tps = calTps(words,line)
         elif(search("RegionPoolINFO",line)):
             regionPool = long(line.split()[4])
+            if (maxPoolUse[1] == 0):
+                regionPoolConfig = long(line.split()[1])
+                maxPoolUse[1] = regionPoolConfig                
         elif(search("SharedPoolINFO",line)):
-            sharedPool = long(line.split()[4]) 
+            sharedPool = long(line.split()[4])
+            if (maxPoolUse[3] == 0):
+                sharedPoolConfig = long(line.split()[1])
+                maxPoolUse[3] = sharedPoolConfig
         else:
             montime = line.split(" Current time: ")
             if(montime[0] == "=="):
@@ -40,9 +46,9 @@ def processLine(text, peekDict, tpsDict, maxPoolUse):
         if regionPool > maxPoolUse[0]:
             maxPoolUse[0] = regionPool
         if sharedPool > maxPoolUse[1]:
-            maxPoolUse[1] = sharedPool
-        print peekData
-        print tpsData
+            maxPoolUse[2] = sharedPool
+        print 'peek:'+str(peekData)
+        print 'tps:'+str(tpsData)
         
         
 def calTps(words, line):
@@ -72,7 +78,7 @@ def calTps(words, line):
 
 def processFile(moniFile, peekDict, tpsDict): 
     try:
-        maxPoolUse=[0,0]
+        maxPoolUse = [0, 0, 0, 0]
         rptFile = open(moniFile ,"r")
         text = rptFile.read()
         words = text.split("====================================")
@@ -80,8 +86,10 @@ def processFile(moniFile, peekDict, tpsDict):
             if element != "\n":
                 processLine(element, peekDict, tpsDict, maxPoolUse)
         if (maxPoolUse[0] != 0):
+            for i in xrange(len(maxPoolUse)):
+                maxPoolUse[i]=str(maxPoolUse[i])
             poolFile = open(pathDict['maxPath']+'/pool.csv','a')
-            poolFile.write(moniFile+','+str(maxPoolUse[0])+','+str(maxPoolUse[1])+'\n')
+            poolFile.write(moniFile+',' + ','.join(maxPoolUse)+'\n')
             poolFile.close()
     finally:
         rptFile.close()

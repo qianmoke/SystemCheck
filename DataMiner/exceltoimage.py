@@ -6,8 +6,8 @@ def exceltoimage(reportPath, fileName, imagePath):
     try:
         excel = Dispatch('Excel.Application')
     
-        excel.Visible = True
-        excel.DisplayAlerts = True
+        excel.Visible = False
+        excel.DisplayAlerts = False
     
         workbook = excel.Workbooks.Open(reportPath+ '\\' + fileName)
         imageName=os.path.abspath(imagePath+'\\'+fileName+".html")
