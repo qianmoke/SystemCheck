@@ -1,5 +1,5 @@
 pathDict={
-'moniPath':"G:\\Systemcheck\\MONI6",
+'moniPath':"G:\\Systemcheck\\MONI5",
 'reportPath':"G:\\Systemcheck\\report",
 'imagePath':"G:\\Systemcheck\\Web\\statics\\images",
 'templatePath': "G:\\Systemcheck\\template",

@@ -9,14 +9,36 @@ import os
 from random import randint
 class IndexHandler(web.RequestHandler):
     def get(self):
-        lparInfo = []
-        regionInfo = []
+        systemInfo = []
         for root,dirs,files in os.walk(pathDict['imagePath']):
             for directory in dirs:
                 lpar = directory.split('.')[0].split('_')[0]
-                region = directory.split('.')[0].split('_')[1]
-                lparInfo.append(lpar)
-                regionInfo.append(region)
+                if re.search('pipsv',directory) or re.search('phbps',directory):
+                    system=lpar[:5]
+                elif re.search('pccmcis',directory):
+                    system=lpar[:8]
+                else:
+                    system=lpar[:4]
+                if system not in systemInfo:
+                    systemInfo.append(system)
+        self.render("index2.html",systemInfo=systemInfo)
+
+class IndexModule(web.UIModule):
+    def render(self, system):
+        return self.render_string("system.html",system=system)
+
+class CicsHandler(web.RequestHandler):
+    def get(self):
+        lparInfo = []
+        regionInfo = []
+        sysName=self.get_argument("system", "IPSV", True)
+        for root,dirs,files in os.walk(pathDict['imagePath']):
+            for directory in dirs:
+                if re.search(sysName,directory):
+                    lpar = directory.split('.')[0].split('_')[0]
+                    region = directory.split('.')[0].split('_')[1]
+                    lparInfo.append(lpar)
+                    regionInfo.append(region)
         self.render("report.html",lparInfo = lparInfo,regionInfo = regionInfo,pathDict = pathDict,period=period)
 
 class RegionModule(web.UIModule):

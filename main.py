@@ -7,7 +7,7 @@ from Web.server import  main
 import thread
 
 if __name__ == "__main__":
-    fileDict = defaultdict(list)  
+    '''fileDict = defaultdict(list)  
     for root, dirs, files in os.walk(pathDict['moniPath']):
         for moniFile in files:
             if re.search("_", moniFile):
@@ -34,5 +34,5 @@ if __name__ == "__main__":
         for directory in dirs:
             for root,dirs,files in os.walk(pathDict['imagePath']+"\\"+directory):
                 for fileName in files:
-                    imagechoose(pathDict['imagePath']+"\\"+directory, fileName)
+                    imagechoose(pathDict['imagePath']+"\\"+directory, fileName)'''
     main()
