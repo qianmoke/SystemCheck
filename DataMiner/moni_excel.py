@@ -135,7 +135,7 @@ def excelProcess(reportPath, peekDict, tpsDict):
             if sheetName == 'Tps':
                 chart.tpsChart(workbook, workbook.sheetnames[sheetName], rowCount)
             elif sheetName == 'TclassPeekStacked':
-                chart.peekChartAll(workbook, workbook.sheetnames[sheetName], rowCount)
+                chart.peekChartAll(workbook, workbook.sheetnames[sheetName], rowCount, clomCount)
             else:
                 chart.peekChartOne(sheetName, tclassnum, workbook, workbook.sheetnames[sheetName], rowCount)
                 tclassnum +=1
