@@ -13,10 +13,10 @@ class IndexHandler(web.RequestHandler):
         for root,dirs,files in os.walk(pathDict['imagePath']):
             for directory in dirs:
                 lpar = directory.split('.')[0].split('_')[0]
-                if re.search('pipsv',directory) or re.search('phbps',directory):
+                if re.search('pipsv',directory) or re.search('phbps',directory) or re.search('prcps', directory):
                     system=lpar[:5]
-                elif re.search('pccmcis',directory):
-                    system=lpar[:8]
+                elif re.search('pccmcis',directory) or re.search('mcisnet',directory):
+                    system=lpar[:7]
                 else:
                     system=lpar[:4]
                 if system not in systemInfo:
@@ -34,11 +34,19 @@ class CicsHandler(web.RequestHandler):
         sysName=self.get_argument("system", "IPSV", True)
         for root,dirs,files in os.walk(pathDict['imagePath']):
             for directory in dirs:
-                if re.search(sysName,directory):
-                    lpar = directory.split('.')[0].split('_')[0]
-                    region = directory.split('.')[0].split('_')[1]
-                    lparInfo.append(lpar)
-                    regionInfo.append(region)
+                if (sysName == 'pips'):
+                    if ((not re.search('pipsv',directory)) and re.search(sysName,directory)):
+                        lpar = directory.split('.')[0].split('_')[0]
+                        region = directory.split('.')[0].split('_')[1]
+                        lparInfo.append(lpar)
+                        regionInfo.append(region)
+                else:
+                    if re.search(sysName,directory):
+                        lpar = directory.split('.')[0].split('_')[0]
+                        region = directory.split('.')[0].split('_')[1]
+                        lparInfo.append(lpar)
+                        regionInfo.append(region)
+                        
         self.render("report.html",lparInfo = lparInfo,regionInfo = regionInfo,pathDict = pathDict,period=period)
 
 class RegionModule(web.UIModule):

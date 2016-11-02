@@ -6,7 +6,7 @@ Created on Dec 21, 2015
 
 from config import period,pathDict
 from collections import OrderedDict
-from re import search
+from re import search,match
 import xlsxwriter
 from DataMiner import chart
 month = period[0]
@@ -21,7 +21,7 @@ def processLine(text, peekDict, tpsDict, maxPoolUse):
     for line in text.splitlines():
         if (search("TClass", line) and (not search("TClassINFO_DFHTCL00",line) and (not search("TClassINFO00",line)))):
             tmpDict[line.split()[0]] = line.split()[4]
-        elif(search("TransStatINFO1",line)):
+        elif(search("TransStatINFO1\t",line)):
             tps = calTps(words,line)
         elif(search("RegionPoolINFO",line)):
             regionPool = long(line.split()[4])
@@ -71,6 +71,7 @@ def calTps(words, line):
         tps=line.split()[4]
         if(float(tps)<0):
             tps=0.0
+    print line.split()[4]
     return trancount,tps
 
 
