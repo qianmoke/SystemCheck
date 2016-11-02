@@ -11,10 +11,11 @@ import xlsxwriter
 from DataMiner import chart
 month = period[0]
 dateStart = period[1]
-dateEnd = period[0]
+dateEnd = period[2]
 def processLine(text, peekDict, tpsDict, maxPoolUse):
     tmpDict=OrderedDict()
     timetag = ""
+    tps = (0,0.0)
     regionPool, regionPoolConfig, sharedPool, sharedPoolConfig = (0, 0, 0, 0)
     words = text.split("==")
     for line in text.splitlines():
@@ -41,14 +42,11 @@ def processLine(text, peekDict, tpsDict, maxPoolUse):
     if ( dateStart <= int(timeTest) <= dateEnd and timeMonth == month):
         peekDict[timetag] = tmpDict
         tpsDict[timetag] = tps
-        peekData = peekDict[timetag]
-        tpsData = tpsDict[timetag]
         if regionPool > maxPoolUse[0]:
             maxPoolUse[0] = regionPool
-        if sharedPool > maxPoolUse[1]:
+        if sharedPool > maxPoolUse[2]:
             maxPoolUse[2] = sharedPool
-        print 'peek:'+str(peekData)
-        print 'tps:'+str(tpsData)
+        print timetag
         
         
 def calTps(words, line):
@@ -83,7 +81,7 @@ def processFile(moniFile, peekDict, tpsDict):
         text = rptFile.read()
         words = text.split("====================================")
         for element in words:
-            if element != "\n":
+            if ((element != "\n") and element != ''):
                 processLine(element, peekDict, tpsDict, maxPoolUse)
         if (maxPoolUse[0] != 0):
             for i in xrange(len(maxPoolUse)):

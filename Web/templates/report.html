@@ -193,7 +193,7 @@ lang=EN-US style='font-size:12.0pt;line-height:105%;font-family:宋体'>1.1<span
 style='font:7.0pt "Times New Roman"'> </span></span></b><b><span lang=EN-US
 style='font-size:12.0pt;line-height:105%;font-family:宋体'>CICS</span></b></h5>
 {% for i in xrange(len(lparInfo)) %}
-	{% module RegionModule(lparInfo[i],regionInfo[i],imagePath,'G:\\Systemcheck\\max') %}
+	{% module RegionModule(lparInfo[i],regionInfo[i],pathDict) %}
 {% end %}
 <p class=MsoNormal style='margin-left:21.0pt;line-height:150%;text-autospace:
 none'><b><span lang=EN-US style='font-size:14.0pt;line-height:150%;font-family:
@@ -259,7 +259,7 @@ lang=EN-US>TPS</span><span style='font-family:宋体'>及最大并发数，总�
   </td>
  </tr>
 {% for i in xrange(len(lparInfo)) %}
-	{% module TpsModule(lparInfo[i],regionInfo[i],'G:\\Systemcheck\\max') %}
+	{% module TpsModule(lparInfo[i],regionInfo[i],pathDict) %}
 {% end %}
  </table>
 <p class=MsoNormal><span style='font-family:宋体'>从上表可以看出最大并发数未超过系统允许的最大值，能够满足当前业务量需求。</span></p>
@@ -267,7 +267,6 @@ lang=EN-US>TPS</span><span style='font-family:宋体'>及最大并发数，总�
 <h5 align=left style='margin-left:61.8pt;text-align:left;text-indent:-21.15pt'><b><span
 lang=EN-US style='font-size:12.0pt;line-height:105%'>2.2 CICS</span></b><b><span
 style='font-size:12.0pt;line-height:105%;font-family:宋体'>并发数控制</span></b></h5>
-{% module TclassModule(lparInfo,regionInfo,imagePath) %}
 <p class=MsoNormal style='line-height:150%;text-autospace:none'><span
 lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; IPS-VIP</span><span
 style='font-family:宋体'>系统</span><span lang=EN-US>8</span><span
@@ -279,9 +278,7 @@ style='font-family:宋体'>月</span><span lang=EN-US>{{period[1]}}</span><span
 style='font-family:宋体'>日至</span><span lang=EN-US>{{period[0]}}</span><span
 style='font-family:宋体'>月</span><span lang=EN-US>{{period[2]}}</span><span
 style='font-family:宋体'>日的数据，统计各类交易在统计周期内达到的最大并发值，如下图。</span></p>
-
-
-
+{% module TclassModule(lparInfo,regionInfo,pathDict) %}
 <p class=MsoNormal style='margin-left:10.5pt;text-indent:10.5pt'><span
 style='font-family:宋体'>从业务运行情况看，</span><span lang=EN-US>IPS-VIP</span><span
 style='font-family:宋体'>系统</span><span lang=EN-US>AOR</span><span
@@ -325,7 +322,7 @@ style='font-size:12.0pt;line-height:105%;font-family:宋体'>内存控制</span>
   </td>
  </tr>
  {% for i in xrange(len(lparInfo)) %}
-	{% module PoolModule(lparInfo[i],regionInfo[i],'G:\\Systemcheck\\max') %}
+	{% module PoolModule(lparInfo[i],regionInfo[i],pathDict) %}
 {% end %}
 </table>
 
