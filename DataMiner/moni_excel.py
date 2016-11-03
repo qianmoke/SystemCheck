@@ -71,7 +71,6 @@ def calTps(words, line):
         tps=line.split()[4]
         if(float(tps)<0):
             tps=0.0
-    print line.split()[4]
     return trancount,tps
 
 

@@ -22,7 +22,7 @@
 
 <ul>
 {% for i in xrange(len(systemInfo)) %}
-	{% module IndexModule(systemInfo[i]) %}
+	<li><a href="http://127.0.0.1:8081/cics?system={{system}}">{{system}}</a></li>
 {% end %}
 </ul>
 </article>

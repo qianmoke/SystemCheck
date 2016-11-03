@@ -23,10 +23,6 @@ class IndexHandler(web.RequestHandler):
                     systemInfo.append(system)
         self.render("index2.html",systemInfo=systemInfo)
 
-class IndexModule(web.UIModule):
-    def render(self, system):
-        return self.render_string("system.html",system=system)
-
 class CicsHandler(web.RequestHandler):
     def get(self):
         lparInfo = []
@@ -46,8 +42,9 @@ class CicsHandler(web.RequestHandler):
                         region = directory.split('.')[0].split('_')[1]
                         lparInfo.append(lpar)
                         regionInfo.append(region)
-                        
-        self.render("report.html",lparInfo = lparInfo,regionInfo = regionInfo,pathDict = pathDict,period=period)
+        tclass = randint(0, len(lparInfo)-1)
+        files=os.listdir(pathDict['imagePath'] + '\\'+lparInfo[tclass] + '_'+regionInfo[tclass]+'.xlsx.files')                
+        self.render("report.html",lparInfo = lparInfo,regionInfo = regionInfo,pathDict = pathDict,period=period,tclass=tclass,files=files)
 
 class RegionModule(web.UIModule):
     def render(self, lpar, region, pathDict):
@@ -86,18 +83,3 @@ class PoolModule(web.UIModule):
                 if (re.search(lpar,line) and (re.search(region,line))):
                         poolInfo = line.split(',')[1:]     
         return self.render_string('pool.html', lpar = lpar, region = region, poolInfo = poolInfo)
-
-class TclassModule(web.UIModule):
-    def render(self, lparInfo, regionInfo, pathDict):
-        i = randint(0, len(lparInfo)-1)
-        imageFile=''
-        tclassFile = open(pathDict['templatePath']+'\\tclass.html','w')
-        for root, dirs, files in os.walk(pathDict['imagePath'] + '\\'+lparInfo[i] + '_'+regionInfo[i]+'.xlsx.files'):
-            for j in xrange(2,len(files),1):
-                imageFile = lparInfo[i] + '_'+regionInfo[i]+'.xlsx.files/'+files[j]
-                image="<p class=MsoNormal style='margin-left:21.0pt;line-height:150%;text-autospace:\nnone'>\
-                        <span lang=EN-US><img width=553 height=349\n\
-                        src={{static_url('images/" + imageFile + "')}}></span></p>\n"
-                tclassFile.write(image)
-        tclassFile.close()
-        return self.render_string('tclass.html')

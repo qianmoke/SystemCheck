@@ -272,13 +272,19 @@ lang=EN-US>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; IPS-VIP</span><span
 style='font-family:宋体'>系统</span><span lang=EN-US>8</span><span
 style='font-family:宋体'>个</span><span lang=EN-US>AOR</span><span
 style='font-family:宋体'>节点是负载均衡的</span><span lang=EN-US>,</span><span
-style='font-family:宋体'>选取</span><span lang=EN-US>pipsvaor5</span><span
+style='font-family:宋体'>选取</span><span lang=EN-US>{{regionInfo[tclass]}}</span><span
 style='font-family:宋体'>节点</span><span lang=EN-US>{{period[0]}}</span><span
 style='font-family:宋体'>月</span><span lang=EN-US>{{period[1]}}</span><span
 style='font-family:宋体'>日至</span><span lang=EN-US>{{period[0]}}</span><span
 style='font-family:宋体'>月</span><span lang=EN-US>{{period[2]}}</span><span
 style='font-family:宋体'>日的数据，统计各类交易在统计周期内达到的最大并发值，如下图。</span></p>
-{% module TclassModule(lparInfo,regionInfo,pathDict) %}
+
+{% for j in xrange(2,len(files),1) %}
+<p class=MsoNormal style='margin-left:21.0pt;line-height:150%;text-autospace:none'>                        
+<span lang=EN-US><img width=553 height=349
+src={{static_url('images/'+lparInfo[tclass] + '_'+regionInfo[tclass]+'.xlsx.files/'+files[j])}}></span></p>
+{% end %}
+
 <p class=MsoNormal style='margin-left:10.5pt;text-indent:10.5pt'><span
 style='font-family:宋体'>从业务运行情况看，</span><span lang=EN-US>IPS-VIP</span><span
 style='font-family:宋体'>系统</span><span lang=EN-US>AOR</span><span
